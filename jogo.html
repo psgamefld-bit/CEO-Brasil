@@ -22,7 +22,7 @@
       <select id="speed" onchange="setSpeed(this.value)"><option value="1500">Normal</option><option value="700">Rápido</option><option value="250">Turbo</option></select>
       <button onclick="nextDay()">+1 dia</button>
       <button onclick="skipMonth()">Pular mês</button>
-      <button onclick="goTab('settings')">⚙️ Configurações</button>
+      <button class="icon-btn settings-top-button" title="Configurações" onclick="goSettings()">⚙️</button>
     </div>
   </header>
   <main class="layout">
@@ -45,9 +45,8 @@
       <nav id="tabs" class="tabs"></nav>
       <div id="content"></div>
     </section>
-    <aside class="panel right diary-panel">
+    <aside class="panel right">
       <h2>📰 Diário</h2>
-      <p class="muted diary-helper">Avisos importantes aparecem na frente da tela. Aqui ficam só os recados recentes por alguns segundos.</p>
       <div id="news" class="news"></div>
       <div id="log" class="log"></div>
     </aside>
@@ -88,8 +87,12 @@
   <script src="client_interactions.js"></script>
   <script src="balance.js"></script>
   <script src="v22_features.js"></script>
+  <script src="consumption.js"></script>
+  <script src="vacations.js"></script>
+  <script src="digital_infra.js"></script>
   <script src="diary_popup.js"></script>
   <script src="settings.js"></script>
+  <script src="guided_tutorial.js"></script>
   <script src="tab_router.js"></script>
 </body>
 </html>

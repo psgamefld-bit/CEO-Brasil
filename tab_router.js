@@ -1,6 +1,5 @@
-/* CEO Brasil v24 - Correção central de abas
-   Este arquivo deve ser carregado por último.
-   Ele garante que cada botão do menu abra a tela correta, inclusive Hospital. */
+/* CEO Brasil v30 - roteador central de abas
+   Carregado por último para evitar conflito entre módulos. */
 (function(){
   function screenMap(){
     return {
@@ -30,7 +29,9 @@
       branches: window.branches,
       dre: window.dre,
       ranking: window.ranking,
-      settings: window.settings
+      settings: window.settings,
+      leisure: window.leisure,
+      digital: window.digitalInfra
     };
   }
 
@@ -43,9 +44,10 @@
       ['alerts','⚠️ Alertas','objectives'],
       ['bicos','⚡ Bicos','contracts'],
       ['hospital','🏥 Hospital','food'],
+      ['leisure','🎡 Lazer','hospital'],
+      ['digital','🖥️ Infra Digital','upgrades'],
       ['insurance','🛡️ Seguros','clients'],
-      ['ranking','🏆 Ranking','dre'],
-      ['settings','⚙️ Configurações','ranking']
+      ['ranking','🏆 Ranking','dre']
     ];
     for(const [id,label,after] of wanted){
       if(!tabs.some(t=>t[0]===id)){
@@ -69,12 +71,15 @@
     const tabs = window.TABS || TABS;
     const el = document.getElementById('tabs');
     if(!el) return;
-    el.innerHTML = tabs.map(([k,l]) => `<button class="tab ${currentTab===k?'active':''}" onclick="currentTab='${k}';renderAll()">${l}</button>`).join('');
+    el.innerHTML = tabs
+      .filter(([k])=>k !== 'settings')
+      .map(([k,l]) => `<button class="tab ${currentTab===k?'active':''}" data-tab="${k}" onclick="currentTab='${k}';renderAll()">${l}</button>`)
+      .join('');
   };
 
   window.goTab = function(tab){ currentTab = tab; renderAll(); };
+  window.goSettings = function(){ currentTab = 'settings'; renderAll(); };
 
-  const previousRenderAll = window.renderAll;
   window.renderAll = function(){
     try{
       if(typeof renderHud === 'function') renderHud();

@@ -410,3 +410,125 @@ h3 { font-size: 16px; color: #cbd5e1; margin-top: 20px; }
 @media(max-width:700px){
   .settings-actions button { width: 100%; }
 }
+
+/* --- CEO Brasil v30: topbar compacta + tutorial guiado sem modal --- */
+.topbar {
+  padding: 7px 18px !important;
+  grid-template-columns: 245px minmax(520px, 1fr) auto !important;
+  gap: 12px !important;
+  min-height: 76px;
+}
+.logo, .avatar {
+  width: 42px !important;
+  height: 42px !important;
+  font-size: 22px !important;
+  border-radius: 10px !important;
+}
+.brand { gap: 10px !important; }
+.brand h1 { font-size: 18px !important; }
+.brand p { font-size: 10px !important; margin-top: 3px !important; }
+.hud { gap: 8px !important; align-items: stretch; }
+.stat {
+  min-width: 112px !important;
+  padding: 6px 10px !important;
+  border-radius: 6px !important;
+}
+.stat small { font-size: 9px !important; }
+.stat b { font-size: 13px !important; }
+.time-controls { gap: 7px !important; align-items: center; }
+.time-controls button, .time-controls select {
+  padding: 8px 11px !important;
+  min-height: 38px;
+}
+.icon-btn {
+  width: 40px !important;
+  height: 40px !important;
+  min-width: 40px !important;
+  padding: 0 !important;
+  border-radius: 999px !important;
+  font-size: 18px !important;
+  box-shadow: 0 4px 0 #111827, 0 10px 18px rgba(59,130,246,.18);
+}
+.settings-top-button {
+  border-color: #60a5fa !important;
+  background: linear-gradient(180deg, #1f2937, #111827) !important;
+}
+
+.ceo-tour-highlight {
+  position: relative;
+  z-index: 1200 !important;
+  outline: 3px solid #fbbf24 !important;
+  outline-offset: 5px !important;
+  box-shadow: 0 0 0 8px rgba(251,191,36,.14), 0 0 24px rgba(251,191,36,.55) !important;
+  border-radius: 12px !important;
+}
+.tour-bubble {
+  position: fixed;
+  z-index: 1300;
+  width: min(340px, calc(100vw - 24px));
+  background: linear-gradient(180deg, #1e293b, #0f172a);
+  border: 2px solid #3b82f6;
+  border-top: 4px solid #fbbf24;
+  border-radius: 14px;
+  padding: 16px;
+  box-shadow: 0 20px 55px rgba(0,0,0,.55), 0 0 22px rgba(59,130,246,.22);
+  color: var(--text);
+  animation: tourPop .18s ease;
+}
+.tour-bubble .tour-kicker {
+  color: #93c5fd;
+  text-transform: uppercase;
+  letter-spacing: .8px;
+  font-size: 11px;
+  font-weight: 800;
+  margin-bottom: 6px;
+}
+.tour-bubble h3 {
+  margin: 0 0 8px !important;
+  color: #fff !important;
+  font-size: 17px !important;
+}
+.tour-bubble p {
+  margin: 0;
+  color: #dbeafe;
+  font-size: 13px;
+  line-height: 1.55;
+}
+.tour-actions {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  margin-top: 14px;
+}
+.tour-actions button { padding: 8px 11px !important; min-height: 34px; }
+.tour-arrow {
+  position: fixed;
+  z-index: 1299;
+  width: 16px;
+  height: 16px;
+  background: #1e293b;
+  border-left: 2px solid #3b82f6;
+  border-bottom: 2px solid #3b82f6;
+  transform: rotate(45deg);
+}
+.tour-arrow.right { transform: rotate(225deg); }
+.tour-arrow.top { transform: rotate(135deg); }
+@keyframes tourPop { from { opacity: 0; transform: translateY(8px) scale(.98); } to { opacity: 1; transform: translateY(0) scale(1); } }
+
+@media(max-width: 1200px){
+  .topbar { grid-template-columns: 1fr !important; min-height: unset; }
+}
+@media(max-width:700px){
+  .tour-bubble { left: 12px !important; right: 12px !important; top: auto !important; bottom: 12px !important; width: auto; }
+  .tour-arrow { display: none; }
+}
+
+/* v31 - energia, férias e infra digital */
+.mentor-card, .vacation-card, .infra-card { border-left: 4px solid var(--blue); }
+.infra-kpi { display:grid; grid-template-columns: repeat(3,1fr); gap:12px; }
+.infra-kpi .mini-card b { font-size:18px; color:#fff; }
+.card .chapter-progress { margin: 10px 0 6px; }
+button.icon-btn.settings-top-button { border-radius: 999px; width: 46px; height: 46px; padding: 0; font-size: 18px; }
+.right .actions { display:none !important; }
+@media(max-width:700px){ .infra-kpi { grid-template-columns:1fr; } }

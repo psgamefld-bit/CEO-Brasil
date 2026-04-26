@@ -12,7 +12,7 @@
     location.reload();
   };
 
-  window.openTutorialPage = function(){ location.href='tutorial.html'; };
+  window.openTutorialPage = function(){ if(window.showGameTour) window.showGameTour(0); else location.href='tutorial.html'; };
 
   window.settings = function(){
     var saveKey = (typeof SAVE_KEY !== 'undefined') ? SAVE_KEY : 'ceo_brasil_save';
@@ -46,7 +46,7 @@
           <p class="muted">Use estas opções para testar com amigos e mandar pontuação no grupo.</p>
           <div class="actions-row settings-actions">
             <button onclick="copyRanking()">🏆 Copiar score</button>
-            <button onclick="openTutorialPage()">📘 Abrir tutorial</button>
+            <button onclick="openTutorialPage()">🧭 Reiniciar tutorial guiado</button>
             <button onclick="currentTab='guia';renderAll()">🧭 Guia dentro do jogo</button>
             <button onclick="currentTab='alerts';renderAll()">⚠️ Ver alertas</button>
           </div>
