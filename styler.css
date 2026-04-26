@@ -28,3 +28,17 @@
 .client-delay-note{margin-top:10px;padding:10px;border-radius:14px;border:1px solid rgba(255,209,102,.34);background:rgba(255,209,102,.08);font-size:13px;line-height:1.35}
 .client-delay-note.broken{border-color:rgba(255,92,122,.45);background:rgba(255,92,122,.10)}
 .client-delay-note span{color:var(--muted)}
+/* v22 */
+.contract-estimate{margin:10px 0;padding:10px;border:1px solid rgba(255,255,255,.10);border-radius:14px;background:rgba(255,255,255,.04)}
+.mentor-card{border-left:4px solid var(--blue)}
+.alert-card{border-left:4px solid var(--warn)}
+.scorebox{white-space:pre-wrap;background:rgba(0,0,0,.22);border:1px solid var(--border);border-radius:14px;padding:12px;color:var(--text);font-size:12px;line-height:1.45}
+@media(max-width:760px){.contract-estimate .pills{display:grid;grid-template-columns:1fr}.scorebox{font-size:11px}.mentor-card .actions-row{display:grid;grid-template-columns:1fr}}
+
+/* v23 - Diário em popup central */
+.diary-popup-box{max-width:720px;border-radius:24px;overflow:hidden}
+.diary-popup-head{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;padding:6px 2px 14px;border-bottom:1px solid rgba(255,255,255,.1)}
+.diary-popup-kicker{display:inline-block;color:var(--muted);font-size:13px;margin-bottom:6px}.diary-popup-head h2{margin:0}.diary-popup-head.good h2{color:#47e58b}.diary-popup-head.warn h2{color:#ffd166}.diary-popup-head.bad h2{color:#ff6b8a}
+.diary-popup-message{margin-top:16px;padding:18px;border-radius:18px;background:rgba(255,255,255,.065);border-left:5px solid rgba(255,255,255,.24);line-height:1.55;font-size:16px;white-space:pre-wrap}.diary-popup-message.good{border-left-color:#34d399;background:rgba(52,211,153,.09)}.diary-popup-message.warn{border-left-color:#fbbf24;background:rgba(251,191,36,.09)}.diary-popup-message.bad{border-left-color:#fb7185;background:rgba(251,113,133,.1)}
+.diary-popup-tip{margin:12px 2px 0;font-size:13px}.diary-popup-actions{display:flex;gap:10px;flex-wrap:wrap;justify-content:flex-end;margin-top:18px}
+@media(max-width:620px){.diary-popup-actions button{width:100%}.diary-popup-message{font-size:15px}}
