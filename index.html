@@ -3,78 +3,180 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>CEO Brasil v15 - Clientes + Contratos Realistas</title>
+  <title>CEO Brasil - Simulador Empresarial</title>
   <link rel="stylesheet" href="styler.css" />
+  <style>
+    body.landing-body {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      overflow-x: hidden;
+    }
+    .landing-wrap {
+      width: min(1120px, 100%);
+      display: grid;
+      grid-template-columns: 1.08fr .92fr;
+      gap: 22px;
+      align-items: stretch;
+    }
+    .hero-card, .info-card {
+      background: linear-gradient(180deg, rgba(255,255,255,.09), rgba(255,255,255,.045));
+      border: 1px solid var(--border);
+      border-radius: 28px;
+      box-shadow: var(--shadow);
+      padding: 26px;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero-card::before {
+      content: "";
+      position: absolute;
+      inset: -120px -120px auto auto;
+      width: 300px;
+      height: 300px;
+      background: radial-gradient(circle, rgba(90,169,255,.35), transparent 65%);
+      pointer-events: none;
+    }
+    .landing-badge {
+      display: inline-flex;
+      gap: 8px;
+      align-items: center;
+      border: 1px solid rgba(255,255,255,.18);
+      background: rgba(255,255,255,.08);
+      padding: 8px 12px;
+      border-radius: 999px;
+      color: var(--muted);
+      font-size: 13px;
+      margin-bottom: 18px;
+    }
+    .hero-title {
+      font-size: clamp(38px, 7vw, 74px);
+      line-height: .95;
+      letter-spacing: -2px;
+      margin: 0 0 16px;
+    }
+    .hero-title span {
+      color: #7db8ff;
+    }
+    .hero-subtitle {
+      font-size: 18px;
+      color: var(--muted);
+      line-height: 1.55;
+      max-width: 660px;
+      margin: 0 0 22px;
+    }
+    .landing-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin: 24px 0 14px;
+    }
+    .landing-actions a, .landing-actions button {
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 48px;
+      padding: 12px 18px;
+      border-radius: 16px;
+      color: var(--text);
+      font-weight: 800;
+    }
+    .landing-actions .primary-link {
+      background: linear-gradient(135deg, #2979ff, #8e5cff);
+      border: 0;
+    }
+    .landing-actions .ghost-link {
+      background: rgba(255,255,255,.08);
+      border: 1px solid var(--border);
+    }
+    .feature-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0,1fr));
+      gap: 10px;
+      margin-top: 18px;
+    }
+    .feature {
+      background: rgba(0,0,0,.18);
+      border: 1px solid rgba(255,255,255,.09);
+      border-radius: 18px;
+      padding: 12px;
+      min-height: 86px;
+    }
+    .feature b { display:block; margin-bottom: 5px; }
+    .feature p { margin: 0; color: var(--muted); font-size: 13px; line-height: 1.35; }
+    .info-card h2 { margin-top: 0; }
+    .steps { display:grid; gap:10px; }
+    .step {
+      display:flex;
+      gap:10px;
+      align-items:flex-start;
+      padding: 12px;
+      background: rgba(255,255,255,.055);
+      border: 1px solid rgba(255,255,255,.09);
+      border-radius: 18px;
+    }
+    .step-num {
+      width: 30px; height: 30px;
+      flex: none;
+      border-radius: 999px;
+      background: rgba(90,169,255,.2);
+      display:grid; place-items:center;
+      font-weight: 900;
+      color:#9bcbff;
+    }
+    .save-box {
+      margin-top: 16px;
+      padding: 14px;
+      border-radius: 18px;
+      background: rgba(55,214,122,.10);
+      border: 1px solid rgba(55,214,122,.22);
+      color: #dfffea;
+      line-height:1.45;
+      font-size: 14px;
+    }
+    .tiny-note { color: var(--muted); font-size: 12px; margin-top: 12px; }
+    @media (max-width: 900px) {
+      .landing-wrap { grid-template-columns: 1fr; }
+      .feature-grid { grid-template-columns: 1fr; }
+      body.landing-body { align-items: flex-start; }
+    }
+  </style>
 </head>
-<body>
-  <header class="topbar">
-    <div class="brand"><div class="logo">🇧🇷</div><div><h1>CEO Brasil v15</h1><p>Modo Realista Periferia</p></div></div>
-    <div class="hud">
-      <div class="stat"><small>Caixa</small><b id="cash">R$ 0</b></div>
-      <div class="stat"><small>Data</small><b id="date">Dia 1</b></div>
-      <div class="stat"><small>Faturamento total</small><b id="lifetime">R$ 0</b></div>
-      <div class="stat"><small>Nível empresa</small><b id="bizLevel">Home office</b></div>
-      <div class="stat"><small>Reputação</small><b id="rep">0</b></div>
-      <div class="stat"><small>Score</small><b id="score">0</b></div>
-    </div>
-    <div class="time-controls">
-      <button class="primary" id="autoBtn" onclick="toggleAuto()">▶ Iniciar</button>
-      <select id="speed" onchange="setSpeed(this.value)"><option value="1500">Normal</option><option value="700">Rápido</option><option value="250">Turbo</option></select>
-      <button onclick="nextDay()">+1 dia</button>
-      <button onclick="skipMonth()">Pular mês</button>
-    </div>
-  </header>
-  <main class="layout">
-    <aside class="panel left">
-      <h2>👤 Você</h2>
-      <div class="profile"><div class="avatar" id="avatar">🧑‍💼</div><div><b id="playerLabel">Empresário</b><p id="lifeLabel" class="muted">18 anos · solteiro</p></div></div>
-      <div class="meters">
-        <label>Energia <span id="energyLabel"></span></label><div class="meter"><i id="energyBar"></i></div>
-        <label>Fome <span id="hungerLabel"></span></label><div class="meter"><i id="hungerBar"></i></div>
-        <label>Saúde <span id="healthLabel"></span></label><div class="meter"><i id="healthBar"></i></div>
-        <label>Estresse <span id="stressLabel"></span></label><div class="meter"><i id="stressBar"></i></div>
-        <label>Motivação <span id="motivationLabel"></span></label><div class="meter"><i id="motivationBar"></i></div>
+<body class="landing-body">
+  <main class="landing-wrap">
+    <section class="hero-card">
+      <div class="landing-badge">🇧🇷 Modo Realista Periferia · beta para testes</div>
+      <h1 class="hero-title">CEO <span>Brasil</span></h1>
+      <p class="hero-subtitle">
+        Comece com R$ 5.000, home office simples, fome, contas, contratos pequenos, funcionários, banco, jurídico, carros, moradia e tente virar um grande empresário brasileiro.
+      </p>
+      <div class="landing-actions">
+        <a class="primary-link" href="jogo.html">▶ Iniciar jogo</a>
+        <a class="ghost-link" href="jogo.html" onclick="localStorage.removeItem('ceo_brasil_v15_save')">🔄 Novo save</a>
       </div>
-      <h3>🏠 Moradia atual</h3><div id="currentHousing" class="mini-card"></div>
-      <h3>🍽️ Alimentação</h3><div id="currentFood" class="mini-card"></div>
-      <h3>🚗 Veículo atual</h3><div id="currentVehicle" class="mini-card"></div>
-      <h3>🎯 Marcos</h3><div id="milestones" class="stack"></div>
-    </aside>
-    <section class="panel center">
-      <nav id="tabs" class="tabs"></nav>
-      <div id="content"></div>
+      <div class="feature-grid">
+        <div class="feature"><b>💼 Contratos reais</b><p>Prazo, qualidade, cliente avaliando, calote, suporte e processo.</p></div>
+        <div class="feature"><b>👷 Equipe</b><p>Entrevistas, salários, tarefas, moral e eventos de funcionários.</p></div>
+        <div class="feature"><b>🏦 Banco e contas</b><p>Empréstimos com análise, cobranças, DRE, impostos e score.</p></div>
+        <div class="feature"><b>🏠 Vida pessoal</b><p>Fome, saúde, moradia regional, veículos, família e rotina.</p></div>
+      </div>
     </section>
-    <aside class="panel right">
-      <h2>📰 Diário</h2>
-      <div class="actions"><button onclick="saveGame()">Salvar</button><button onclick="loadGame()">Carregar</button><button class="danger" onclick="resetGame()">Resetar</button></div>
-      <div id="news" class="news"></div>
-      <div id="log" class="log"></div>
+    <aside class="info-card">
+      <h2>Como testar</h2>
+      <div class="steps">
+        <div class="step"><div class="step-num">1</div><div><b>Clique em Iniciar jogo</b><br><span class="muted">Crie seu personagem e escolha cidade/área inicial.</span></div></div>
+        <div class="step"><div class="step-num">2</div><div><b>Faça contratos pequenos</b><br><span class="muted">No começo, contratos grandes ficam bloqueados por habilidade e estrutura.</span></div></div>
+        <div class="step"><div class="step-num">3</div><div><b>Salve seu progresso</b><br><span class="muted">O jogo salva no navegador de cada pessoa usando localStorage.</span></div></div>
+      </div>
+      <div class="save-box">
+        <b>💾 Progresso dos seus amigos</b><br>
+        Cada amigo terá o próprio save no navegador dele. Para testar online no GitHub Pages, isso já funciona sem servidor.
+      </div>
+      <p class="tiny-note">Dica: para ranking online ou save em nuvem, precisa usar backend como Firebase/Supabase/Google Sheets API. Excel local não salva dados automaticamente de vários jogadores.</p>
     </aside>
   </main>
-  <div class="modal show" id="startModal"><div class="modal-box big">
-    <h2>Começar no Modo Realista Periferia</h2>
-    <p class="muted">Você começa com R$ 5.000, home office simples, score baixo, fome, contas e contratos pequenos.</p>
-    <div class="form-grid">
-      <label>Nome<input id="startName" value="Endryw"></label>
-      <label>Empresa<input id="startCompany" value="Garagem Digital"></label>
-      <label>Sexo<select id="startGender"><option value="homem">Homem</option><option value="mulher">Mulher</option></select></label>
-      <label>Idade<input id="startAge" type="number" min="18" max="60" value="18"></label>
-      <label>Cidade<select id="startCity"></select></label>
-      <label>Área inicial<select id="startFocus"><option value="programacao">Programação</option><option value="design">Design</option><option value="vendas">Vendas</option><option value="atendimento">Atendimento</option></select></label>
-    </div>
-    <button class="primary wide" onclick="startGame()">Começar</button>
-  </div></div>
-  <div class="modal" id="monthModal"><div class="modal-box big" id="monthBox"></div></div>
-  <div class="modal" id="interviewModal"><div class="modal-box" id="interviewBox"></div></div>
-  <script src="game.js"></script>
-  <script src="judicial.js"></script>
-  <script src="contracts.js"></script>
-  <script src="data.js"></script>
-  <script src="clients.js"></script>
-  <script src="employees.js"></script>
-  <script src="bank.js"></script>
-  <script src="vehicles.js"></script>
-  <script src="finance.js"></script>
-  <script src="ui.js"></script>
 </body>
 </html>
