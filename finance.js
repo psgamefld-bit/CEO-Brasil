@@ -20,7 +20,7 @@
     byId('monthBox').innerHTML=`<h2>Resumo do mês ${state.month}</h2>
       <div class="grid2"><div class="card"><b>Receita</b><h2>${money(state.monthRevenue)}</h2></div><div class="card"><b>Despesas</b><h2>${money(state.monthExpenses)}</h2></div><div class="card"><b>Cobranças pendentes</b><h2>${money(pending)}</h2></div><div class="card"><b>Resultado</b><h2>${money(state.monthRevenue-state.monthExpenses)}</h2></div></div>
       <h3>Principais cobranças geradas</h3><div class="pills">${Object.entries(byType).map(([k,v])=>`<span class="pill">${k}: ${money(v)}</span>`).join('')}</div>
-      <div class="card"><b>Novidades</b><p>Loja de veículos atualizada, candidatos renovados, contratos prospectados, seguros cobrados e processos avançaram.</p></div>
+      <div class="card"><b>Novidades</b><p>Loja de veículos atualizada, candidatos renovados, próximo ciclo de clientes agendado, seguros cobrados e processos avançaram.</p></div>
       <div class="actions-row"><button class="primary" onclick="currentTab='bills';closeModal('monthModal');renderAll()">Ir para cobranças</button><button onclick="currentTab='dre';closeModal('monthModal');renderAll()">Ver DRE</button><button onclick="closeModal('monthModal')">Continuar</button></div>`;
     openModal('monthModal');
   };
@@ -29,7 +29,7 @@
     const snap={month:state.month,year:state.year,revenue:state.monthRevenue,expenses:state.monthExpenses,cash:state.cash,net:netWorth(),completed:state.completed};
     generateMonthlyBills(); monthlyVehicleWear();
     if(typeof monthlyEmployeeEvents==='function') monthlyEmployeeEvents();
-    refreshCandidates(); refreshCarShop(); generateContracts(3);
+    refreshCandidates(); refreshCarShop(); if(typeof scheduleNextContract==='function') scheduleNextContract(3,7);
     state.recurringClients.slice().forEach(r=>{
       if(chance(r.churn+(state.health<45?.08:0))){ addLog(`${r.client} cancelou o contrato recorrente.`, 'bad'); state.recurringClients=state.recurringClients.filter(x=>x.id!==r.id); }
       else{ r.months++; state.cash+=r.monthly; state.monthRevenue+=r.monthly; state.lifetime+=r.monthly; addLog(`Receita recorrente de ${r.client}: ${money(r.monthly)}.`, 'good'); }

@@ -1,19 +1,43 @@
-/* CEO Brasil v14 - fila de contratos separada.
-   Este arquivo sobrescreve funções de contratos do game.js para:
-   - limitar o jogador a 3 contratos aceitos;
-   - cada executor trabalhar em apenas 1 contrato por vez;
-   - contratos na fila perdem prazo, mas não ganham progresso;
-   - prazo vencido não finaliza automaticamente: vira atraso;
-   - interface mostra posição na fila e status. */
+/* CEO Brasil v17 - contratos com fila + clientes orgânicos por prazo.
+   - remove botão manual de prospectar;
+   - clientes novos aparecem naturalmente a cada 3 a 7 dias;
+   - rotina "Fazer propaganda" e funcionário em "Vender" furam esse prazo. */
 (function(){
+  function absoluteDay(){ return ((state.year||1)-1)*360 + ((state.month||1)-1)*30 + (state.day||1); }
   function ensureQueues(){
     state.jobs = state.jobs || [];
     state.contractHistory = state.contractHistory || [];
+    if(typeof state.totalDays !== 'number') state.totalDays = absoluteDay();
+    if(typeof state.nextContractAt !== 'number') scheduleNextContract();
     state.jobs.forEach((j,i)=>{
       if(!j.acceptedAt) j.acceptedAt = i + 1;
       if(!j.queueStatus) j.queueStatus = 'Na fila';
       if(typeof j.remaining !== 'number') j.remaining = j.days || 1;
     });
+  }
+  window.scheduleNextContract = function(min=3,max=7){
+    if(!state) return;
+    const now = typeof state.totalDays === 'number' ? state.totalDays : absoluteDay();
+    const wait = Math.ceil(rand(min,max));
+    state.nextContractAt = now + wait;
+    state.nextContractIn = wait;
+  };
+  window.daysUntilNextContract = function(){
+    ensureQueues();
+    return Math.max(0, (state.nextContractAt || absoluteDay()) - (state.totalDays || absoluteDay()));
+  };
+  function naturalContractTick(){
+    ensureQueues();
+    if((state.totalDays || absoluteDay()) >= state.nextContractAt){
+      const qtd = chance(.22 + state.branches.length*.04) ? 2 : 1;
+      if((state.contracts||[]).length < 6){
+        generateContracts(qtd);
+        addLog(`Chegaram ${qtd} nova(s) proposta(s) de cliente.`, 'good');
+      } else {
+        addLog('Alguns clientes procuraram sua empresa, mas você já estava com propostas demais abertas.', 'warn');
+      }
+      scheduleNextContract(3,7);
+    }
   }
   function executorLabel(id){
     if(id === 'player') return 'Você';
@@ -24,13 +48,9 @@
     ensureQueues();
     return state.jobs.filter(j=>j.executor===executor).sort((a,b)=>(a.acceptedAt||0)-(b.acceptedAt||0));
   }
-  function queuePosition(job){
-    return jobsFor(job.executor).findIndex(x=>x.id===job.id) + 1;
-  }
-  function canAcceptFor(executor){
-    const max = executor === 'player' ? 3 : 3;
-    return jobsFor(executor).length < max;
-  }
+  function queuePosition(job){ return jobsFor(job.executor).findIndex(x=>x.id===job.id) + 1; }
+  function canAcceptFor(executor){ return jobsFor(executor).length < 3; }
+
   window.contractCard = function(c){
     const req = Object.entries(c.weights).map(([k,w])=>`${SKILL_NAMES[k]} ${Math.ceil(c.diff*w)}`).join(' · ');
     return `<div class="card"><h4>${c.emoji} ${c.service}</h4><p><b>${c.client}</b> · ${c.clientType}</p><div class="pills"><span class="pill">Valor ${money(c.value)}</span><span class="pill">Prazo ${c.days}d</span><span class="pill">Expira ${c.expires}d</span><span class="pill">${AUDIENCES[c.audience]}</span></div><p class="muted small">Recomendado: ${req}</p><div class="mini-actions"><b>Preço:</b><button onclick="tryContract('${c.id}','player',.85)">Baixo</button><button class="primary" onclick="tryContract('${c.id}','player',1)">Justo</button><button onclick="tryContract('${c.id}','player',1.25)">Alto</button></div><div class="actions-row"><button onclick="chooseExecutor('${c.id}')">Delegar / escolher executor</button><button class="danger" onclick="rejectContract('${c.id}')">Recusar</button></div></div>`;
@@ -53,9 +73,7 @@
     ensureQueues();
     const c = state.contracts.find(x=>x.id===id);
     if(!c) return;
-    if(!canAcceptFor(executor)){
-      return addLog(`${executorLabel(executor)} já tem 3 contratos na fila. Finalize um antes de aceitar outro.`, 'bad');
-    }
+    if(!canAcceptFor(executor)) return addLog(`${executorLabel(executor)} já tem 3 contratos na fila. Finalize um antes de aceitar outro.`, 'bad');
     c.value *= priceMult;
     c.status = 'Na fila';
     c.queueStatus = 'Na fila';
@@ -71,7 +89,6 @@
   };
   window.updateJobDay = function(job){
     ensureQueues();
-    // O prazo corre para todos, inclusive quem está aguardando na fila.
     job.remaining--;
     const pos = queuePosition(job);
     if(pos > 1){
@@ -102,15 +119,17 @@
   window.jobMini = window.activeCard;
   window.contracts = function(){
     ensureQueues();
-    return `<div class="section-title"><h2>💼 Contratos</h2><button onclick="generateContracts(3);renderAll()">Prospectar</button></div>
+    return `<div class="section-title"><h2>💼 Contratos</h2></div>
+      <div class="card"><b>Novos clientes:</b> propostas aparecem naturalmente a cada <b>3 a 7 dias</b>. Próxima chegada prevista em <b>${daysUntilNextContract()} dia(s)</b>. Para furar esse prazo, use <b>Fazer propaganda</b> na Rotina ou coloque funcionário para <b>Vender</b>.</div>
       <div class="card"><b>Regra de fila:</b> você pode aceitar até <b>3 contratos</b>, mas só executa <b>1 por vez</b>. Funcionários também executam 1 por vez. Contratos aguardando na fila podem atrasar.</div>
-      <h3>Propostas disponíveis</h3><div class="grid">${state.contracts.length?state.contracts.map(contractCard).join(''):'<p class="muted">Sem propostas.</p>'}</div>
+      <h3>Propostas disponíveis</h3><div class="grid">${state.contracts.length?state.contracts.map(contractCard).join(''):'<p class="muted">Sem propostas. Aguarde novos clientes ou invista em propaganda na rotina.</p>'}</div>
       <h3>Fila e execução</h3><div class="grid">${state.jobs.length?state.jobs.map(activeCard).join(''):'<p class="muted">Nada em execução.</p>'}</div>`;
   };
   window.nextDay = function(){
     if(!state.started) return;
     ensureQueues();
     state.day++;
+    state.totalDays = (state.totalDays || absoluteDay()) + 1;
     applyRoutine();
     state.hunger = clamp(state.hunger-rand(5,9),0,100);
     if(state.hunger < 25){
@@ -132,7 +151,7 @@
     state.legalCases.forEach(updateLegalDay);
     processEmployeeTasks();
     if(state.candidates.length && state.day > state.candidateExpiresDay){ state.candidates=[]; addLog('Os candidatos do mês sumiram.', 'warn'); }
-    if(state.contracts.length < 5 && chance(.45*city().demand+state.branches.length*.05)) generateContracts(1);
+    naturalContractTick();
     if(state.day > 30){
       state.day = 1; state.month++;
       if(state.month > 12){ state.month = 1; state.year++; state.age++; }
@@ -143,6 +162,7 @@
   window.calendar = function(){
     ensureQueues();
     const events=[];
+    events.push({day:state.day + daysUntilNextContract(),text:'Chegada provável de novos clientes orgânicos',type:'contratos'});
     state.jobs.forEach(j=>events.push({day:Math.max(1,state.day+j.remaining),text:`Entrega: ${j.service} para ${j.client} (${j.status||'fila'}, executor: ${executorLabel(j.executor)})`,type:'contrato'}));
     state.legalCases.filter(c=>!['Acordo pago','Vencido','Perdido','Encerrado'].includes(c.status)).forEach(c=>events.push({day:state.day+(c.days||0),text:`Jurídico: ${c.kind} ${c.name} (${c.status})`,type:'jurídico'}));
     state.bills.filter(b=>b.status==='Pendente').forEach(b=>events.push({day:state.day,text:`Cobrança: ${b.name}`,type:'cobrança'}));
@@ -150,6 +170,5 @@
     events.push({day:30,text:'Fechamento do mês',type:'mês'});
     return `<div class="section-title"><h2>📅 Agenda</h2></div><table class="table"><tr><th>Dia</th><th>Evento</th><th>Tipo</th></tr>${events.sort((a,b)=>a.day-b.day).map(e=>`<tr><td>${e.day}</td><td>${e.text}</td><td>${e.type}</td></tr>`).join('')}</table>`;
   };
-  // Re-render final para garantir que as funções sobrescritas entrem na tela atual.
   if(typeof renderAll === 'function') renderAll();
 })();
