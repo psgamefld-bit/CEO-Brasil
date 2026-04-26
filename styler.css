@@ -42,3 +42,7 @@
 .diary-popup-message{margin-top:16px;padding:18px;border-radius:18px;background:rgba(255,255,255,.065);border-left:5px solid rgba(255,255,255,.24);line-height:1.55;font-size:16px;white-space:pre-wrap}.diary-popup-message.good{border-left-color:#34d399;background:rgba(52,211,153,.09)}.diary-popup-message.warn{border-left-color:#fbbf24;background:rgba(251,191,36,.09)}.diary-popup-message.bad{border-left-color:#fb7185;background:rgba(251,113,133,.1)}
 .diary-popup-tip{margin:12px 2px 0;font-size:13px}.diary-popup-actions{display:flex;gap:10px;flex-wrap:wrap;justify-content:flex-end;margin-top:18px}
 @media(max-width:620px){.diary-popup-actions button{width:100%}.diary-popup-message{font-size:15px}}
+/* v26 - avisos centrais que não acumulam */
+.diary-notice-floating{align-items:center;justify-content:center;background:rgba(0,0,0,.42);backdrop-filter:blur(3px)}
+.diary-notice-floating .diary-popup-box{animation:popNotice .18s ease-out;max-width:680px}
+@keyframes popNotice{from{opacity:0;transform:translateY(18px) scale(.98)}to{opacity:1;transform:translateY(0) scale(1)}}

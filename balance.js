@@ -3,7 +3,7 @@
    processo em contrato verbal e missões sem recompensa em dinheiro. */
 (function(){
   const COMPLEXITY = {
-    easy: { label:'Fácil', color:'good', speed:1.45, latePenalty:2.6, xp:0.9 },
+    easy: { label:'Fácil', color:'good', speed:1.18, latePenalty:3.1, xp:0.95 },
     medium: { label:'Médio', color:'warn', speed:1.05, latePenalty:3.6, xp:1.1 },
     hard: { label:'Difícil', color:'bad', speed:0.78, latePenalty:4.8, xp:1.35 }
   };
@@ -37,8 +37,8 @@
     const lifetime = state.lifetime || 0;
     let target;
     const r = Math.random();
-    if(lifetime < 10000){ target = r < .75 ? 'easy' : 'medium'; }
-    else if(lifetime < 100000){ target = r < .50 ? 'easy' : r < .88 ? 'medium' : 'hard'; }
+    if(lifetime < 10000){ target = r < .62 ? 'easy' : 'medium'; }
+    else if(lifetime < 100000){ target = r < .42 ? 'easy' : r < .86 ? 'medium' : 'hard'; }
     else if(lifetime < 500000){ target = r < .30 ? 'easy' : r < .78 ? 'medium' : 'hard'; }
     else { target = r < .18 ? 'easy' : r < .55 ? 'medium' : 'hard'; }
     let pool = list.filter(s=>complexityOfService(s)===target);
@@ -54,7 +54,11 @@
       const clientType = pick(CLIENT_TYPES);
       let value = s.base * city().demand * clientType.pay * rand(.88,1.18) * (1 + (state.branches||[]).length*.08);
       let days = Math.max(1, Math.round(s.days * rand(.90,1.18)));
-      if(comp === 'easy') days = Math.max(1, Math.min(days, s.id==='landing'?5:3));
+      if(comp === 'easy') {
+        const minDays = s.id==='suporte' ? 1 : s.id==='arte' ? 2 : 4;
+        const maxDays = s.id==='landing' ? 6 : 4;
+        days = Math.max(minDays, Math.min(days, maxDays));
+      }
       state.contracts.push({
         id:uid(), client:pick(CLIENTS), clientType:clientType.name, service:s.name, emoji:s.emoji, serviceId:s.id,
         value, days, remaining:0, progress:0, diff:s.diff, audience:s.audience, weights:s.weights,
@@ -110,7 +114,11 @@
     speed *= (state.ownedUpgrades||[]).includes('notebook') ? 1.10 : 1;
     speed *= (state.ownedUpgrades||[]).includes('internet') ? 1.06 : 1;
     if(job.remaining < 0) speed *= .92;
-    if(compKey === 'easy') speed = Math.max(speed, expectedDaily * 1.05); // evita contrato fácil de 1 dia virar 7 dias
+    if(compKey === 'easy') {
+      // Fácil continua viável, mas não é automático: cansaço, fome e fila ainda importam.
+      speed = Math.max(speed, expectedDaily * 0.82);
+      speed *= rand(.92, 1.04);
+    }
     job.progress = clamp((job.progress||0) + rand(speed*.86, speed*1.16), 0, 100);
     if(typeof V15 !== 'undefined'){
       const p = V15.PAYMENT_PLANS[job.paymentPlan||'fim'];
@@ -121,7 +129,7 @@
       }
     }
     if(job.remaining === -1 && !job.delayInteractionResolved && !job.delayInteractionPending && typeof showClientDelayModal === 'function'){
-      const askChance = compKey === 'easy' ? .55 : compKey === 'medium' ? .75 : .90;
+      const askChance = compKey === 'easy' ? .42 : compKey === 'medium' ? .72 : .90;
       if(chance(askChance)) setTimeout(()=>showClientDelayModal(job), 80);
     }
   };
@@ -163,7 +171,7 @@
     return clamp(q, 0, 100);
   }
   function payPercent(job, quality){
-    let pct = quality>=90 ? 1.08 : quality>=75 ? 1 : quality>=60 ? .88 : quality>=45 ? .72 : quality>=30 ? .58 : .45;
+    let pct = quality>=90 ? 1.06 : quality>=75 ? .98 : quality>=60 ? .84 : quality>=45 ? .68 : quality>=30 ? .54 : .42;
     const risk = (job.risk||.08) * (quality<60 ? 1.25 : .45);
     if(chance(risk)){
       const isCaloteiro = String(job.clientType||'').toLowerCase().includes('calote');
@@ -174,7 +182,7 @@
       if(job.promiseBroken) d = Math.max(d, rand(.28,.45));
       pct *= (1-d);
     }
-    return clamp(pct, .38, 1.12);
+    return clamp(pct, .34, 1.10);
   }
   window.finishJob = function(j){
     ensureV21();
