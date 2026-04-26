@@ -4,84 +4,438 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>CEO Brasil - Menu Inicial</title>
-  <link rel="stylesheet" href="styler.css" />
+  <!-- Usando uma fonte mais encorpada para dar cara de logo de jogo -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800;900&display=swap" rel="stylesheet">
+  
   <style>
-    :root{--neon:#36e39b;--gold:#ffd166;--danger:#ff5c7a;--sky:#62b0ff;}
-    body.menu-game{
-      min-height:100vh;margin:0;overflow-x:hidden;color:#eef6ff;
-      background:
-        radial-gradient(circle at 14% 18%, rgba(49,128,255,.24), transparent 32%),
-        radial-gradient(circle at 86% 18%, rgba(136,93,255,.22), transparent 34%),
-        linear-gradient(180deg,#0b1325 0%,#07101d 52%,#030810 100%);
-      display:grid;place-items:center;padding:24px;
+    :root {
+      --bg-dark: #070b14;
+      --panel-bg: #111827;
+      --panel-border: #1f2937;
+      --accent-blue: #3b82f6;
+      --accent-green: #22c55e;
+      --text-main: #f3f4f6;
+      --text-muted: #9ca3af;
+      --money-gold: #fbbf24;
     }
-    .menu-scene{width:min(1180px,100%);position:relative;isolation:isolate;}
-    .city{position:absolute;inset:auto 0 -34px 0;height:220px;z-index:-1;opacity:.8;overflow:hidden;filter:drop-shadow(0 -20px 80px rgba(77,158,255,.14));}
-    .building{position:absolute;bottom:0;width:70px;background:linear-gradient(180deg,rgba(61,101,150,.38),rgba(20,35,58,.86));border:1px solid rgba(255,255,255,.08);border-bottom:0;border-radius:10px 10px 0 0;}
-    .building::before{content:"";position:absolute;inset:14px;background:repeating-linear-gradient(90deg,rgba(255,209,102,.45) 0 8px,transparent 8px 22px),repeating-linear-gradient(180deg,transparent 0 18px,rgba(255,255,255,.08) 18px 20px);opacity:.55;}
-    .b1{left:2%;height:92px}.b2{left:10%;height:150px;width:90px}.b3{left:22%;height:118px}.b4{left:32%;height:182px;width:105px}.b5{right:36%;height:128px;width:86px}.b6{right:24%;height:170px}.b7{right:12%;height:106px;width:95px}.b8{right:2%;height:150px;width:72px}
-    .coin{position:absolute;border-radius:999px;background:linear-gradient(135deg,#ffe18a,#c99223);box-shadow:0 0 30px rgba(255,209,102,.28);opacity:.9;animation:float 5s ease-in-out infinite;z-index:-1;}
-    .coin.c1{width:34px;height:34px;left:6%;top:18%;animation-delay:.2s}.coin.c2{width:24px;height:24px;right:13%;top:12%;animation-delay:1.4s}.coin.c3{width:18px;height:18px;right:7%;bottom:32%;animation-delay:.8s}.coin.c4{width:28px;height:28px;left:40%;top:4%;animation-delay:2s}
-    @keyframes float{0%,100%{transform:translateY(0) rotate(0)}50%{transform:translateY(-18px) rotate(14deg)}}
-    .menu-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:22px;align-items:stretch;}
-    .game-card{position:relative;overflow:hidden;border-radius:34px;padding:30px;border:1px solid rgba(255,255,255,.14);box-shadow:0 30px 90px rgba(0,0,0,.44);background:linear-gradient(180deg,rgba(255,255,255,.105),rgba(255,255,255,.045));backdrop-filter:blur(12px);}
-    .game-card::after{content:"";position:absolute;inset:-140px -120px auto auto;width:360px;height:360px;background:radial-gradient(circle,rgba(85,155,255,.33),transparent 62%);pointer-events:none;}
-    .badge{display:inline-flex;gap:8px;align-items:center;padding:8px 13px;border-radius:999px;border:1px solid rgba(255,255,255,.16);background:rgba(0,0,0,.22);font-size:13px;color:#bad4ff;margin-bottom:18px;}
-    .title{font-size:clamp(44px,7vw,82px);line-height:.88;margin:0;letter-spacing:-3px;text-transform:uppercase;text-shadow:0 12px 40px rgba(38,123,255,.22);}
-    .title span{display:block;color:#72b9ff;}
-    .subtitle{max-width:700px;margin:18px 0 0;color:#c4d7ff;font-size:18px;line-height:1.55;}
-    .menu-buttons{display:flex;flex-wrap:wrap;gap:12px;margin:28px 0 22px;}
-    .menu-btn{min-height:52px;padding:13px 20px;border-radius:18px;text-decoration:none;color:#fff;font-weight:900;display:inline-flex;align-items:center;gap:9px;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.09);box-shadow:0 12px 32px rgba(0,0,0,.18);transition:.18s transform,.18s filter,.18s background;}
-    .menu-btn:hover{transform:translateY(-2px);filter:brightness(1.1);}
-    .start{background:linear-gradient(135deg,#198cff,#805cff);border:0;font-size:17px;}
-    .dangerish{background:rgba(255,92,122,.16);border-color:rgba(255,92,122,.34);}
-    .mini-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:20px;}
-    .mini-stat{border-radius:18px;padding:12px;background:rgba(0,0,0,.2);border:1px solid rgba(255,255,255,.09);min-height:82px;}
-    .mini-stat b{display:block;margin-bottom:5px}.mini-stat span{color:#b8cff8;font-size:13px;line-height:1.35;display:block;}
-    .mission-list{display:grid;gap:12px;margin-top:12px;}
-    .mission{display:flex;gap:12px;align-items:flex-start;padding:14px;border-radius:20px;border:1px solid rgba(255,255,255,.11);background:rgba(255,255,255,.065);}
-    .mission .icon{width:38px;height:38px;border-radius:14px;display:grid;place-items:center;background:rgba(90,169,255,.18);font-weight:900;flex:none;}
-    .mission b{display:block;margin-bottom:3px}.mission span{color:#c1d3f6;font-size:14px;line-height:1.35;}
-    .warning-box{margin-top:18px;border-radius:20px;padding:16px;background:linear-gradient(135deg,rgba(255,209,102,.15),rgba(255,92,122,.11));border:1px solid rgba(255,209,102,.25);line-height:1.45;color:#ffecc1;}
-    .version{position:absolute;right:22px;bottom:18px;color:#7f94b8;font-size:12px;}
-    @media(max-width:940px){.menu-grid{grid-template-columns:1fr}.mini-stats{grid-template-columns:repeat(2,1fr)}.title{letter-spacing:-2px}.game-card{padding:22px}.city{opacity:.45}}
-    @media(max-width:540px){body.menu-game{padding:12px}.mini-stats{grid-template-columns:1fr}.menu-btn{width:100%;justify-content:center}.subtitle{font-size:16px}}
+
+    * {
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    body {
+      min-height: 100vh;
+      margin: 0;
+      overflow: hidden; /* Oculta a barra de rolagem */
+      color: var(--text-main);
+      background-color: var(--bg-dark);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 24px;
+      position: relative;
+    }
+
+    /* --- EFEITO 3D DO CHÃO (RETROWAVE/SIMULADOR) --- */
+    .floor-grid {
+      position: absolute;
+      bottom: 0; left: -50%; right: -50%;
+      height: 50vh;
+      background-image: 
+        linear-gradient(rgba(59, 130, 246, 0.4) 2px, transparent 2px),
+        linear-gradient(90deg, rgba(59, 130, 246, 0.4) 2px, transparent 2px);
+      background-size: 80px 80px;
+      transform: perspective(600px) rotateX(75deg);
+      transform-origin: top center;
+      animation: floorScroll 2s linear infinite;
+      z-index: -3;
+      -webkit-mask-image: linear-gradient(to top, rgba(0,0,0,1) 0%, rgba(0,0,0,0) 100%);
+      mask-image: linear-gradient(to top, rgba(0,0,0,1) 0%, rgba(0,0,0,0) 100%);
+    }
+
+    @keyframes floorScroll {
+      0% { background-position: 0 0; }
+      100% { background-position: 0 80px; }
+    }
+
+    /* Brilho no fundo */
+    body::before {
+      content: "";
+      position: absolute;
+      top: -20%; left: 20%;
+      width: 60vw; height: 60vw;
+      background: radial-gradient(circle, rgba(37, 99, 235, 0.15) 0%, transparent 60%);
+      z-index: -4;
+      pointer-events: none;
+    }
+
+    .menu-scene {
+      width: min(850px, 100%); /* Ajustado para um card único */
+      position: relative;
+      z-index: 1;
+    }
+
+    /* --- CIDADE COM SCROLL INFINITO --- */
+    .city-wrapper {
+      position: absolute;
+      inset: auto 0 20vh 0; /* Acima da linha do chão */
+      height: 250px;
+      z-index: -2;
+      opacity: 0.6;
+      display: flex;
+      width: 200vw;
+      animation: cityScroll 40s linear infinite;
+      pointer-events: none;
+      filter: drop-shadow(0 -10px 30px rgba(59, 130, 246, 0.2));
+    }
+
+    @keyframes cityScroll {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50vw); }
+    }
+
+    .city-layer {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-around;
+      width: 100vw;
+      height: 100%;
+    }
+    
+    .building {
+      width: 80px;
+      background: linear-gradient(180deg, #1e293b, #0f172a);
+      border: 2px solid #334155;
+      border-bottom: 0;
+      position: relative;
+    }
+    /* Luzes das janelas */
+    .building::after {
+      content: "";
+      position: absolute;
+      inset: 10px;
+      background: 
+        repeating-linear-gradient(90deg, var(--money-gold) 0 4px, transparent 4px 14px),
+        repeating-linear-gradient(180deg, transparent 0 10px, rgba(255,255,255,0.1) 10px 14px);
+      opacity: 0.3;
+    }
+
+    .b1 { height: 120px; width: 60px; }
+    .b2 { height: 200px; width: 100px; }
+    .b3 { height: 150px; width: 80px; }
+    .b4 { height: 240px; width: 120px; border-top: 4px solid var(--accent-blue); }
+    .b5 { height: 180px; width: 90px; }
+    .b6 { height: 130px; width: 70px; }
+
+    /* --- LAYOUT PRINCIPAL --- */
+    .menu-grid {
+      display: flex;
+      justify-content: center;
+      width: 100%;
+    }
+
+    /* --- PAINEIS ESTILO HUD DE JOGO --- */
+    .game-card {
+      background: rgba(17, 24, 39, 0.85);
+      backdrop-filter: blur(10px);
+      border: 2px solid var(--panel-border);
+      border-top: 4px solid var(--accent-blue);
+      border-radius: 12px;
+      padding: 35px;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7);
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Detalhe tecnológico no painel */
+    .game-card::before {
+      content: "";
+      position: absolute;
+      top: 0; right: 20px;
+      width: 40px; height: 4px;
+      background: var(--accent-blue);
+      box-shadow: 0 0 15px var(--accent-blue);
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 14px;
+      border-radius: 4px;
+      background: rgba(59, 130, 246, 0.1);
+      border: 1px solid rgba(59, 130, 246, 0.3);
+      color: #93c5fd;
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 24px;
+    }
+
+    /* --- LOGO DO JOGO --- */
+    .title {
+      font-size: clamp(48px, 6vw, 72px);
+      line-height: 0.9;
+      margin: 0;
+      letter-spacing: -2px;
+      text-transform: uppercase;
+      font-weight: 900;
+      background: linear-gradient(180deg, #ffffff, #9ca3af);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      filter: drop-shadow(0 4px 10px rgba(0,0,0,0.5));
+    }
+    
+    .title span {
+      display: block;
+      color: var(--accent-blue);
+      background: linear-gradient(180deg, #60a5fa, #2563eb);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .subtitle {
+      margin: 20px 0 0;
+      color: var(--text-muted);
+      font-size: 16px;
+      line-height: 1.6;
+      max-width: 90%;
+    }
+
+    /* --- BOTÕES DE AÇÃO (GAME UI) --- */
+    .menu-buttons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      margin: 35px 0 30px;
+    }
+
+    .menu-btn {
+      padding: 16px 24px;
+      border-radius: 8px;
+      text-decoration: none;
+      color: white;
+      font-weight: 800;
+      font-size: 16px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      transition: all 0.2s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Botão Principal de Iniciar */
+    .start {
+      background: linear-gradient(180deg, var(--accent-green), #16a34a);
+      border: 2px solid #4ade80;
+      box-shadow: 0 6px 0 #15803d, 0 15px 20px rgba(22, 163, 74, 0.4);
+      text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+      flex: 1; /* Ocupa mais espaço */
+      min-width: 200px;
+    }
+    
+    .start:active {
+      transform: translateY(6px);
+      box-shadow: 0 0px 0 #15803d, 0 5px 10px rgba(22, 163, 74, 0.4);
+    }
+
+    .start:hover {
+      filter: brightness(1.1);
+      box-shadow: 0 6px 0 #15803d, 0 15px 30px rgba(22, 163, 74, 0.6);
+    }
+
+    /* Botões Secundários */
+    .secondary-btn {
+      background: linear-gradient(180deg, #374151, #1f2937);
+      border: 2px solid #4b5563;
+      box-shadow: 0 4px 0 #111827;
+    }
+
+    .secondary-btn:active {
+      transform: translateY(4px);
+      box-shadow: 0 0px 0 #111827;
+    }
+
+    .secondary-btn:hover {
+      border-color: #6b7280;
+      background: linear-gradient(180deg, #4b5563, #374151);
+    }
+
+    .dangerish {
+      border-color: #ef4444;
+    }
+    .dangerish:hover {
+      border-color: #f87171;
+      background: linear-gradient(180deg, #991b1b, #7f1d1d);
+    }
+
+    /* --- MINI STATUS (Módulos do Simulador) --- */
+    .mini-stats {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+      margin-top: 10px;
+    }
+
+    .mini-stat {
+      border-radius: 8px;
+      padding: 14px 12px;
+      background: rgba(0, 0, 0, 0.4);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      border-left: 3px solid #4b5563;
+      transition: 0.2s;
+    }
+    
+    .mini-stat:hover {
+      background: rgba(59, 130, 246, 0.1);
+      border-left-color: var(--accent-blue);
+      transform: translateY(-2px);
+    }
+
+    .mini-stat b {
+      display: block;
+      margin-bottom: 6px;
+      font-size: 14px;
+      color: #e5e7eb;
+    }
+    
+    .mini-stat span {
+      color: var(--text-muted);
+      font-size: 12px;
+      line-height: 1.4;
+      display: block;
+    }
+
+    .version {
+      position: absolute;
+      right: 24px;
+      bottom: 20px;
+      color: #4b5563;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 1px;
+    }
+
+    /* Efeito de moedas flutuantes do jogo */
+    .coin-particle {
+      position: absolute;
+      width: 20px; height: 20px;
+      background: radial-gradient(circle, #fcd34d, #d97706);
+      border-radius: 50%;
+      box-shadow: 0 0 15px rgba(245, 158, 11, 0.6);
+      animation: floatCoin 4s ease-in-out infinite;
+      z-index: 0;
+    }
+    
+    @keyframes floatCoin {
+      0%, 100% { transform: translateY(0) scale(1); }
+      50% { transform: translateY(-20px) scale(1.1); }
+    }
+
+    /* Responsividade */
+    @media(max-width: 1024px) {
+      .menu-grid { display: block; }
+      .mini-stats { grid-template-columns: repeat(2, 1fr); }
+      .city-wrapper { opacity: 0.3; }
+    }
+    
+    @media(max-width: 540px) {
+      .mini-stats { grid-template-columns: 1fr; }
+      .menu-btn { width: 100%; }
+      .game-card { padding: 20px; }
+      .title { font-size: 40px; }
+    }
   </style>
 </head>
-<body class="menu-game">
-  <div class="menu-scene">
-    <i class="coin c1"></i><i class="coin c2"></i><i class="coin c3"></i><i class="coin c4"></i>
-    <div class="city" aria-hidden="true">
-      <div class="building b1"></div><div class="building b2"></div><div class="building b3"></div><div class="building b4"></div>
-      <div class="building b5"></div><div class="building b6"></div><div class="building b7"></div><div class="building b8"></div>
+<body>
+  <!-- Fundo 3D animado do simulador -->
+  <div class="floor-grid"></div>
+
+  <!-- Cidade infinita rolando ao fundo -->
+  <div class="city-wrapper" aria-hidden="true">
+    <div class="city-layer">
+      <div class="building b1"></div>
+      <div class="building b2"></div>
+      <div class="building b3"></div>
+      <div class="building b4"></div>
+      <div class="building b5"></div>
+      <div class="building b6"></div>
     </div>
+    <div class="city-layer">
+      <div class="building b1"></div>
+      <div class="building b2"></div>
+      <div class="building b3"></div>
+      <div class="building b4"></div>
+      <div class="building b5"></div>
+      <div class="building b6"></div>
+    </div>
+  </div>
+
+  <div class="menu-scene">
+    <!-- Partículas decorativas de moedas pelo fundo -->
+    <div class="coin-particle" style="top: 10%; left: 5%; animation-delay: 0s;"></div>
+    <div class="coin-particle" style="top: 20%; right: 15%; animation-delay: 1s; width: 15px; height: 15px;"></div>
+    <div class="coin-particle" style="bottom: 30%; left: 45%; animation-delay: 2s; width: 25px; height: 25px;"></div>
+
     <main class="menu-grid">
+      <!-- Painel Principal Centralizado -->
       <section class="game-card">
-        <div class="badge">🇧🇷 Simulador empresarial brasileiro · beta público</div>
+        <div class="badge">
+          <span style="font-size: 16px;">🇧🇷</span> Simulador Empresarial · Beta Público
+        </div>
+        
         <h1 class="title">CEO <span>Brasil</span></h1>
-        <p class="subtitle">Comece na periferia com R$ 5.000, fome, aluguel, contratos pequenos, clientes chatos, banco, jurídico, veículos e tente construir um império sem quebrar no caminho.</p>
+        
+        <p class="subtitle">
+          Comece na periferia com R$ 5.000, fome, aluguel, contratos pequenos, 
+          clientes chatos, banco, jurídico, veículos e tente construir um império sem quebrar no caminho.
+        </p>
+        
         <div class="menu-buttons">
-          <a class="menu-btn start" href="jogo.html">▶ Iniciar jogo</a>
-          <a class="menu-btn" href="tutorial.html">📘 Tutorial</a>
-          <a class="menu-btn dangerish" href="jogo.html" onclick="localStorage.removeItem('ceo_brasil_v15_save')">🔄 Novo jogo</a>
+          <!-- Botão principal destacado -->
+          <a class="menu-btn start" href="jogo.html">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+              <path d="M8 5V19L19 12L8 5Z" />
+            </svg>
+            Iniciar Jogo
+          </a>
+          
+          <a class="menu-btn secondary-btn" href="tutorial.html">
+            📘 Tutorial
+          </a>
+          
+          <a class="menu-btn secondary-btn dangerish" href="jogo.html" onclick="localStorage.removeItem('ceo_brasil_v15_save')">
+            🔄 Novo Jogo
+          </a>
         </div>
+        
         <div class="mini-stats">
-          <div class="mini-stat"><b>💼 Contratos</b><span>Prazo, avaliação, atraso, calote e negociação.</span></div>
-          <div class="mini-stat"><b>🍽️ Vida real</b><span>Fome, saúde, sono, moradia, transporte e estresse.</span></div>
-          <div class="mini-stat"><b>🏦 Dinheiro</b><span>Banco, cobrança, imposto, DRE, score e risco.</span></div>
-          <div class="mini-stat"><b>⚖️ Jurídico</b><span>Cliente reclamando, acordo, recurso e processo.</span></div>
+          <div class="mini-stat">
+            <b>💼 Contratos</b>
+            <span>Prazo, avaliação, atraso, calote e negociação.</span>
+          </div>
+          <div class="mini-stat">
+            <b>🍽️ Vida real</b>
+            <span>Fome, saúde, sono, moradia e transporte.</span>
+          </div>
+          <div class="mini-stat">
+            <b>🏦 Dinheiro</b>
+            <span>Banco, cobrança, imposto, score e risco.</span>
+          </div>
+          <div class="mini-stat">
+            <b>⚖️ Jurídico</b>
+            <span>Cliente reclamando, acordo, recurso e processo.</span>
+          </div>
         </div>
-        <div class="version">v27 · Menu inicial estilo jogo</div>
+        
+        <div class="version">v27.0.1b build</div>
       </section>
-      <aside class="game-card">
-        <div class="badge">🎮 Missão inicial</div>
-        <div class="mission-list">
-          <div class="mission"><div class="icon">1</div><div><b>Sair do sufoco</b><span>Compre comida, pegue serviços fáceis e sobreviva ao primeiro mês.</span></div></div>
-          <div class="mission"><div class="icon">2</div><div><b>Ganhar reputação</b><span>Entregue no prazo para os clientes pagarem melhor e indicarem novos contratos.</span></div></div>
-          <div class="mission"><div class="icon">3</div><div><b>Crescer com cuidado</b><span>Contrate, compre upgrades, formalize e evite dívida antes de ostentar.</span></div></div>
-        </div>
-        <div class="warning-box"><b>⚠️ Dica de sobrevivência:</b><br>Não aceite contrato difícil no começo. Cuide da fome e da energia antes de pular muitos dias.</div>
-      </aside>
     </main>
   </div>
 </body>
