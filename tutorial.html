@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tutorial - CEO Brasil</title>
+  <link rel="stylesheet" href="styler.css" />
+  <style>
+    body.tutorial-body{min-height:100vh;padding:24px;}
+    .tutorial-wrap{width:min(1180px,100%);margin:0 auto;display:grid;grid-template-columns:280px 1fr;gap:18px;align-items:start;}
+    .tutorial-nav{position:sticky;top:18px;background:linear-gradient(180deg,rgba(255,255,255,.09),rgba(255,255,255,.045));border:1px solid var(--border);border-radius:24px;box-shadow:var(--shadow);padding:16px;}
+    .tutorial-nav h2{margin:0 0 10px;font-size:18px;}
+    .tutorial-nav a{display:block;text-decoration:none;color:var(--text);padding:9px 10px;border-radius:12px;margin:4px 0;background:rgba(255,255,255,.045);border:1px solid rgba(255,255,255,.06);font-size:14px;}
+    .tutorial-nav a:hover{background:rgba(90,169,255,.16);}
+    .tutorial-main{display:grid;gap:16px;}
+    .hero-tutorial,.guide-card{background:linear-gradient(180deg,rgba(255,255,255,.09),rgba(255,255,255,.045));border:1px solid var(--border);border-radius:24px;box-shadow:var(--shadow);padding:22px;}
+    .hero-tutorial h1{font-size:clamp(32px,5vw,58px);line-height:1;margin:0 0 10px;}
+    .hero-tutorial p,.guide-card p,.guide-card li{color:var(--muted);line-height:1.55;}
+    .action-row{display:flex;flex-wrap:wrap;gap:10px;margin-top:16px;}
+    .action-row a{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:10px 16px;border-radius:14px;text-decoration:none;color:var(--text);font-weight:800;background:rgba(255,255,255,.08);border:1px solid var(--border);}
+    .action-row a.primary-link{background:linear-gradient(135deg,#2979ff,#8e5cff);border:0;}
+    .tip{padding:12px 14px;border-radius:16px;background:rgba(255,209,102,.11);border:1px solid rgba(255,209,102,.22);color:#fff2c8;margin:12px 0;}
+    .goodbox{padding:12px 14px;border-radius:16px;background:rgba(55,214,122,.10);border:1px solid rgba(55,214,122,.22);color:#dfffea;margin:12px 0;}
+    .warnbox{padding:12px 14px;border-radius:16px;background:rgba(255,92,122,.10);border:1px solid rgba(255,92,122,.22);color:#ffdbe3;margin:12px 0;}
+    .mini-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-top:10px;}
+    .mini{background:rgba(0,0,0,.18);border:1px solid rgba(255,255,255,.09);border-radius:16px;padding:12px;}
+    .mini b{display:block;margin-bottom:5px;}
+    .step-list{counter-reset:steps;display:grid;gap:10px;padding:0;margin:12px 0;}
+    .step-list li{list-style:none;background:rgba(255,255,255,.055);border:1px solid rgba(255,255,255,.08);border-radius:16px;padding:12px 12px 12px 52px;position:relative;}
+    .step-list li::before{counter-increment:steps;content:counter(steps);position:absolute;left:12px;top:12px;width:28px;height:28px;border-radius:999px;background:rgba(90,169,255,.2);display:grid;place-items:center;color:#9bcbff;font-weight:900;}
+    code{background:rgba(0,0,0,.28);padding:2px 6px;border-radius:8px;color:#b8dcff;}
+    table{width:100%;border-collapse:collapse;margin-top:10px;overflow:hidden;border-radius:14px;}
+    th,td{padding:10px;border-bottom:1px solid rgba(255,255,255,.08);text-align:left;color:var(--muted);font-size:14px;}
+    th{color:var(--text);background:rgba(255,255,255,.07);}
+    @media(max-width:900px){.tutorial-wrap{grid-template-columns:1fr}.tutorial-nav{position:static}.mini-grid{grid-template-columns:1fr}}
+  </style>
+</head>
+<body class="tutorial-body">
+  <div class="tutorial-wrap">
+    <aside class="tutorial-nav">
+      <h2>📘 Tutorial</h2>
+      <a href="#inicio">Começo rápido</a>
+      <a href="#tela">O que é cada coisa</a>
+      <a href="#contratos">Contratos</a>
+      <a href="#habilidades">Habilidades</a>
+      <a href="#rotina">Rotina, fome e saúde</a>
+      <a href="#dinheiro">Dinheiro, contas e banco</a>
+      <a href="#equipe">Funcionários</a>
+      <a href="#juridico">Jurídico</a>
+      <a href="#moradia">Moradia e veículos</a>
+      <a href="#dicas">Dicas para crescer</a>
+      <div class="action-row"><a class="primary-link" href="jogo.html">▶ Jogar</a><a href="index.html">🏠 Início</a></div>
+    </aside>
+
+    <main class="tutorial-main">
+      <section class="hero-tutorial" id="inicio">
+        <h1>Como jogar CEO Brasil</h1>
+        <p>Você começa na periferia com R$ 5.000, home office simples e precisa crescer sem quebrar: pegar contratos, cuidar da fome, pagar contas, melhorar habilidades, contratar equipe e evitar processo.</p>
+        <div class="action-row"><a class="primary-link" href="jogo.html">▶ Iniciar jogo</a><a href="index.html">Voltar para página inicial</a></div>
+      </section>
+
+      <section class="guide-card">
+        <h2>🚀 Começo rápido em 5 passos</h2>
+        <ol class="step-list">
+          <li><b>Crie o personagem.</b><br>Escolha nome, sexo, idade, cidade e área inicial. No começo, escolha uma área que combine com contratos pequenos.</li>
+          <li><b>Coma antes de se matar de trabalhar.</b><br>Fome baixa derruba energia, saúde, motivação e qualidade das entregas.</li>
+          <li><b>Pegue contratos pequenos.</b><br>No início, evite contrato difícil. Serviço ruim pode pagar menos e virar reclamação.</li>
+          <li><b>Não aceite trabalho demais sozinho.</b><br>Você pode aceitar até 3 contratos, mas executa um por vez. Os outros ficam na fila e podem atrasar.</li>
+          <li><b>Use o lucro para melhorar estrutura.</b><br>Compre upgrades, cursos, moradia melhor, formalize empresa e depois contrate gente.</li>
+        </ol>
+        <div class="tip"><b>Dica de ouro:</b> no começo, sobreviver é mais importante que parecer rico. Não compre carro caro antes de ter receita recorrente.</div>
+      </section>
+
+      <section class="guide-card" id="tela">
+        <h2>🧭 O que é cada área da tela</h2>
+        <div class="mini-grid">
+          <div class="mini"><b>Topo</b><p>Mostra caixa, data, faturamento total, nível da empresa, reputação e score bancário.</p></div>
+          <div class="mini"><b>Painel esquerdo</b><p>Mostra seu personagem: energia, fome, saúde, estresse, motivação, moradia, alimentação, veículo e marcos.</p></div>
+          <div class="mini"><b>Painel central</b><p>Onde ficam as abas principais: contratos, rotina, cursos, banco, funcionários, jurídico, moradia, veículos e mais.</p></div>
+          <div class="mini"><b>Painel direito</b><p>Diário do jogo, botões de salvar/carregar/resetar e notícias/eventos importantes.</p></div>
+        </div>
+      </section>
+
+      <section class="guide-card" id="contratos">
+        <h2>💼 Contratos</h2>
+        <p>Contratos são a principal forma de ganhar dinheiro. Cada contrato tem cliente, valor, prazo, dificuldade, requisitos, risco de calote e risco de reclamação.</p>
+        <table>
+          <tr><th>Status</th><th>Significado</th></tr>
+          <tr><td>Disponível</td><td>Você pode aceitar, negociar ou recusar.</td></tr>
+          <tr><td>Na fila</td><td>Foi aceito, mas ainda não começou porque o executor está ocupado.</td></tr>
+          <tr><td>Em execução</td><td>O executor está trabalhando nele.</td></tr>
+          <tr><td>Atrasado</td><td>O prazo acabou, mas o trabalho ainda não terminou.</td></tr>
+          <tr><td>Entregue</td><td>Cliente avalia qualidade, paga tudo ou menos.</td></tr>
+        </table>
+        <div class="warnbox"><b>Cuidado:</b> você sozinho aceita até 3 contratos, mas só faz 1 por vez. Se aceitar 3 contratos com prazo curto, os últimos podem atrasar e virar problema.</div>
+        <p>Ao aceitar, escolha o tipo de contrato:</p>
+        <ul>
+          <li><b>Verbal:</b> rápido e barato, mas aumenta risco de calote/processo.</li>
+          <li><b>Contrato simples:</b> equilíbrio entre custo e segurança.</li>
+          <li><b>Contrato com advogado:</b> custa mais, mas protege melhor.</li>
+        </ul>
+      </section>
+
+      <section class="guide-card" id="habilidades">
+        <h2>📈 Status e habilidades</h2>
+        <p>Suas habilidades interferem na qualidade final do serviço. Se a habilidade for baixa para o contrato, o cliente pode pagar menos, pedir correção ou processar.</p>
+        <div class="mini-grid">
+          <div class="mini"><b>Programação</b><p>Sites, sistemas, lojas virtuais, SaaS e contratos técnicos.</p></div>
+          <div class="mini"><b>Design</b><p>Artes, branding, landing pages e aparência dos projetos.</p></div>
+          <div class="mini"><b>Vendas e negociação</b><p>Fechar contratos melhores, cobrar mais e reduzir calote.</p></div>
+          <div class="mini"><b>Gestão e finanças</b><p>Evitar atraso, controlar custos e lidar com contratos maiores.</p></div>
+        </div>
+        <p>Você sobe habilidades fazendo contratos, estudando cursos e melhorando sua estrutura.</p>
+      </section>
+
+      <section class="guide-card" id="rotina">
+        <h2>🍽️ Rotina, fome e saúde</h2>
+        <p>Seu personagem sente fome. Se ficar sem comer, saúde e energia caem com o tempo. Comida também pode afetar estresse e produtividade.</p>
+        <ul>
+          <li><b>Marmita/mercado:</b> mais barato, bom para economizar.</li>
+          <li><b>Restaurante:</b> reduz estresse, mas consome tempo/energia e custa mais.</li>
+          <li><b>iFood:</b> prático, não gasta energia, mas paga taxa/frete.</li>
+          <li><b>Rodízio/churrascaria:</b> caro, mas melhora motivação e reduz estresse.</li>
+        </ul>
+        <div class="tip"><b>Rotina:</b> trabalhar de manhã, tarde e noite acelera contratos, mas aumenta fome, estresse e risco de erro.</div>
+      </section>
+
+      <section class="guide-card" id="dinheiro">
+        <h2>🏦 Dinheiro, cobranças e banco</h2>
+        <p>Todo mês chegam cobranças: aluguel, alimentação, impostos, banco, funcionários, veículo, contador e outras despesas.</p>
+        <ul>
+          <li><b>Pagar:</b> evita multa e mantém reputação.</li>
+          <li><b>Atrasar/negociar:</b> preserva caixa, mas aumenta risco.</li>
+          <li><b>Recusar:</b> pode gerar processo, perda de moradia, score baixo ou carro quebrado.</li>
+        </ul>
+        <p>No banco, você escolhe valor, parcelas e finalidade. O banco analisa score, faturamento, dívidas, patrimônio e regime da empresa.</p>
+      </section>
+
+      <section class="guide-card" id="equipe">
+        <h2>👷 Funcionários e entrevistas</h2>
+        <p>Os candidatos aparecem por poucos dias e mudam todo mês. Você pode abrir uma mini entrevista e decidir se contrata.</p>
+        <ul>
+          <li>Funcionário bom pode recusar empresa com má reputação ou salário baixo.</li>
+          <li>Cada funcionário trabalha em 1 contrato por vez.</li>
+          <li>Se sobrecarregar a equipe, contratos atrasam.</li>
+          <li>Atrasar salário derruba moral e pode gerar processo trabalhista.</li>
+        </ul>
+      </section>
+
+      <section class="guide-card" id="juridico">
+        <h2>⚖️ Jurídico</h2>
+        <p>Processos podem vir de cliente insatisfeito, atraso, serviço mal feito, funcionário sem pagamento ou problemas com contrato verbal.</p>
+        <table>
+          <tr><th>Ação</th><th>Efeito</th></tr>
+          <tr><td>Fazer acordo</td><td>Paga um valor menor agora e encerra o caso.</td></tr>
+          <tr><td>Recorrer</td><td>Paga advogado, espera decisão e pode ganhar ou perder.</td></tr>
+          <tr><td>Ignorar</td><td>Aumenta valor, risco e pode gerar bloqueio fictício.</td></tr>
+        </table>
+        <div class="warnbox"><b>Não ignore tudo:</b> processo ignorado pode virar bola de neve e destruir seu caixa.</div>
+      </section>
+
+      <section class="guide-card" id="moradia">
+        <h2>🏠 Moradia, veículos e cidade</h2>
+        <p>A moradia muda conforme a cidade escolhida. Cada região tem aluguel, compra, segurança, energia, estresse e status.</p>
+        <ul>
+          <li>Moradia melhor recupera mais energia e reduz estresse.</li>
+          <li>Aluguel atrasado pode fazer você perder a moradia.</li>
+          <li>Veículo precisa de manutenção, IPVA/licenciamento e seguro.</li>
+          <li>Carro usado é barato, mas quebra mais e tem durabilidade menor.</li>
+          <li>A loja de veículos atualiza todo mês com ofertas diferentes.</li>
+        </ul>
+      </section>
+
+      <section class="guide-card" id="dicas">
+        <h2>💡 Dicas para crescer</h2>
+        <ol class="step-list">
+          <li><b>Primeiro objetivo:</b> chegar a R$ 10 mil faturados sem pegar processo e sem atrasar contas importantes.</li>
+          <li><b>Invista em habilidade:</b> curso barato no começo pode evitar serviço ruim e pagamento reduzido.</li>
+          <li><b>Formalize na hora certa:</b> MEI/Simples ajuda contratos maiores, mas também traz imposto.</li>
+          <li><b>Monte caixa de emergência:</b> guarde dinheiro antes de carro, luxo ou filial.</li>
+          <li><b>Contrate quando tiver demanda:</b> funcionário parado custa salário; funcionário sobrecarregado atrasa contrato.</li>
+          <li><b>Evite contrato grande cedo:</b> contrato caro com habilidade baixa pode virar prejuízo e processo.</li>
+        </ol>
+        <div class="goodbox"><b>Estratégia segura:</b> contratos pequenos → cursos → reputação → formalização → cliente recorrente → funcionário → escritório → contratos maiores.</div>
+        <div class="action-row"><a class="primary-link" href="jogo.html">▶ Agora bora jogar</a><a href="index.html">🏠 Página inicial</a></div>
+      </section>
+    </main>
+  </div>
+</body>
+</html>
