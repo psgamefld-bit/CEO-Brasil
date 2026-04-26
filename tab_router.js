@@ -29,7 +29,8 @@
       insurance: window.insurance,
       branches: window.branches,
       dre: window.dre,
-      ranking: window.ranking
+      ranking: window.ranking,
+      settings: window.settings
     };
   }
 
@@ -43,7 +44,8 @@
       ['bicos','⚡ Bicos','contracts'],
       ['hospital','🏥 Hospital','food'],
       ['insurance','🛡️ Seguros','clients'],
-      ['ranking','🏆 Ranking','dre']
+      ['ranking','🏆 Ranking','dre'],
+      ['settings','⚙️ Configurações','ranking']
     ];
     for(const [id,label,after] of wanted){
       if(!tabs.some(t=>t[0]===id)){

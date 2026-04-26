@@ -388,3 +388,25 @@ h3 { font-size: 16px; color: #cbd5e1; margin-top: 20px; }
   .tabs .tab { white-space: nowrap; }
   .modal-box { padding: 20px; }
 }
+/* --- CEO Brasil v28: Configurações fora do Diário + Diário temporário --- */
+.diary-panel .actions { display: none !important; }
+.diary-helper {
+  margin: -4px 0 14px;
+  line-height: 1.45;
+}
+.settings-actions button { min-width: 150px; }
+#hungerBar,
+.meter #hungerBar { background: linear-gradient(90deg, #f59e0b, #fbbf24); box-shadow: 0 0 10px rgba(245,158,11,0.5); }
+#healthBar,
+.meter #healthBar { background: linear-gradient(90deg, #ef4444, #f87171); box-shadow: 0 0 10px rgba(239,68,68,0.5); }
+#stressBar,
+.meter #stressBar { background: linear-gradient(90deg, #8b5cf6, #a78bfa); box-shadow: 0 0 10px rgba(139,92,246,0.5); }
+.tab:active { transform: none; }
+.log, .news { max-height: 280px; }
+.news:empty { display: none; }
+.diary-popup-message.good { color: #86efac; }
+.diary-popup-message.warn { color: #fde68a; }
+.diary-popup-message.bad { color: #fca5a5; }
+@media(max-width:700px){
+  .settings-actions button { width: 100%; }
+}
