@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CEO Brasil v15 - Clientes + Contratos Realistas</title>
+  <link rel="stylesheet" href="styler.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand"><div class="logo">🇧🇷</div><div><h1>CEO Brasil v15</h1><p>Modo Realista Periferia</p></div></div>
+    <div class="hud">
+      <div class="stat"><small>Caixa</small><b id="cash">R$ 0</b></div>
+      <div class="stat"><small>Data</small><b id="date">Dia 1</b></div>
+      <div class="stat"><small>Faturamento total</small><b id="lifetime">R$ 0</b></div>
+      <div class="stat"><small>Nível empresa</small><b id="bizLevel">Home office</b></div>
+      <div class="stat"><small>Reputação</small><b id="rep">0</b></div>
+      <div class="stat"><small>Score</small><b id="score">0</b></div>
+    </div>
+    <div class="time-controls">
+      <button class="primary" id="autoBtn" onclick="toggleAuto()">▶ Iniciar</button>
+      <select id="speed" onchange="setSpeed(this.value)"><option value="1500">Normal</option><option value="700">Rápido</option><option value="250">Turbo</option></select>
+      <button onclick="nextDay()">+1 dia</button>
+      <button onclick="skipMonth()">Pular mês</button>
+    </div>
+  </header>
+  <main class="layout">
+    <aside class="panel left">
+      <h2>👤 Você</h2>
+      <div class="profile"><div class="avatar" id="avatar">🧑‍💼</div><div><b id="playerLabel">Empresário</b><p id="lifeLabel" class="muted">18 anos · solteiro</p></div></div>
+      <div class="meters">
+        <label>Energia <span id="energyLabel"></span></label><div class="meter"><i id="energyBar"></i></div>
+        <label>Fome <span id="hungerLabel"></span></label><div class="meter"><i id="hungerBar"></i></div>
+        <label>Saúde <span id="healthLabel"></span></label><div class="meter"><i id="healthBar"></i></div>
+        <label>Estresse <span id="stressLabel"></span></label><div class="meter"><i id="stressBar"></i></div>
+        <label>Motivação <span id="motivationLabel"></span></label><div class="meter"><i id="motivationBar"></i></div>
+      </div>
+      <h3>🏠 Moradia atual</h3><div id="currentHousing" class="mini-card"></div>
+      <h3>🍽️ Alimentação</h3><div id="currentFood" class="mini-card"></div>
+      <h3>🚗 Veículo atual</h3><div id="currentVehicle" class="mini-card"></div>
+      <h3>🎯 Marcos</h3><div id="milestones" class="stack"></div>
+    </aside>
+    <section class="panel center">
+      <nav id="tabs" class="tabs"></nav>
+      <div id="content"></div>
+    </section>
+    <aside class="panel right">
+      <h2>📰 Diário</h2>
+      <div class="actions"><button onclick="saveGame()">Salvar</button><button onclick="loadGame()">Carregar</button><button class="danger" onclick="resetGame()">Resetar</button></div>
+      <div id="news" class="news"></div>
+      <div id="log" class="log"></div>
+    </aside>
+  </main>
+  <div class="modal show" id="startModal"><div class="modal-box big">
+    <h2>Começar no Modo Realista Periferia</h2>
+    <p class="muted">Você começa com R$ 5.000, home office simples, score baixo, fome, contas e contratos pequenos.</p>
+    <div class="form-grid">
+      <label>Nome<input id="startName" value="Endryw"></label>
+      <label>Empresa<input id="startCompany" value="Garagem Digital"></label>
+      <label>Sexo<select id="startGender"><option value="homem">Homem</option><option value="mulher">Mulher</option></select></label>
+      <label>Idade<input id="startAge" type="number" min="18" max="60" value="18"></label>
+      <label>Cidade<select id="startCity"></select></label>
+      <label>Área inicial<select id="startFocus"><option value="programacao">Programação</option><option value="design">Design</option><option value="vendas">Vendas</option><option value="atendimento">Atendimento</option></select></label>
+    </div>
+    <button class="primary wide" onclick="startGame()">Começar</button>
+  </div></div>
+  <div class="modal" id="monthModal"><div class="modal-box big" id="monthBox"></div></div>
+  <div class="modal" id="interviewModal"><div class="modal-box" id="interviewBox"></div></div>
+  <script src="game.js"></script>
+  <script src="judicial.js"></script>
+  <script src="contracts.js"></script>
+  <script src="data.js"></script>
+  <script src="clients.js"></script>
+  <script src="employees.js"></script>
+  <script src="bank.js"></script>
+  <script src="vehicles.js"></script>
+  <script src="finance.js"></script>
+  <script src="ui.js"></script>
+</body>
+</html>
