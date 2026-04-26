@@ -3,3 +3,28 @@
 /* v14 extras */
 .danger-card{border-color:rgba(255,92,122,.45)!important;box-shadow:0 0 0 1px rgba(255,92,122,.12) inset}
 .warning{background:rgba(255,209,102,.16);border-color:rgba(255,209,102,.32)}
+/* v18 - capítulos, feedback e alertas */
+.chapter-progress{height:14px;background:rgba(255,255,255,.09);border-radius:999px;overflow:hidden;border:1px solid var(--line);margin:10px 0}.chapter-progress i{display:block;height:100%;background:linear-gradient(90deg,#2478ff,#3bd67f);border-radius:999px}.objective{display:flex;gap:10px;align-items:center;padding:11px;border:1px solid var(--line);background:rgba(255,255,255,.055);border-radius:14px}.objective.done{border-color:rgba(59,214,127,.35);background:rgba(59,214,127,.08)}.chapter-card{border-color:rgba(90,169,255,.35);box-shadow:0 0 0 1px rgba(90,169,255,.12) inset}.alert-card{border-color:rgba(255,209,102,.38);box-shadow:0 0 0 1px rgba(255,209,102,.12) inset}.feedback-head{padding:12px;border-radius:16px;border:1px solid var(--line);margin-bottom:12px}.feedback-head.good{background:rgba(59,214,127,.10);border-color:rgba(59,214,127,.35)}.feedback-head.warn{background:rgba(255,209,102,.10);border-color:rgba(255,209,102,.35)}.feedback-head.bad{background:rgba(255,92,122,.10);border-color:rgba(255,92,122,.35)}.achievement-on{border-color:rgba(255,209,102,.35);background:rgba(255,209,102,.08)}
+@media(max-width:700px){.topbar{position:relative}.layout{grid-template-columns:1fr}.right{order:3}.left{order:2}.center{order:1}.tabs{overflow-x:auto;flex-wrap:nowrap;padding-bottom:6px}.tabs .tab{white-space:nowrap}.modal{align-items:flex-start}.modal-box{margin-top:20px}.hud{grid-template-columns:1fr 1fr}.brand h1{font-size:18px}}
+
+
+/* v19 hospital e sobrevivência */
+.hospital-card { border-left: 4px solid rgba(80, 180, 255, .75); }
+.hospital-card.sus { border-left-color: rgba(87, 214, 141, .85); }
+.hospital-card.premium { border-left-color: rgba(255, 210, 80, .9); }
+.hospital-critical { border: 1px solid rgba(255, 85, 110, .55); background: rgba(255, 85, 110, .08); }
+.game-over-title { font-size: 34px; margin: 0 0 8px; }
+.survival-row { display:flex; flex-wrap:wrap; gap:8px; margin:10px 0; }
+.survival-row .pill.bad { border-color: rgba(255, 85, 110, .55); background: rgba(255, 85, 110, .12); }
+.survival-row .pill.good { border-color: rgba(87, 214, 141, .55); background: rgba(87, 214, 141, .12); }
+
+/* v20 - clientes inteligentes e negociação de atraso */
+.client-chat-head{padding:14px;border-radius:18px;border:1px solid var(--line);margin-bottom:12px;background:rgba(90,169,255,.10)}
+.client-chat-head.tranquilo{background:rgba(59,214,127,.08);border-color:rgba(59,214,127,.32)}
+.client-chat-head.exigente,.client-chat-head.corporativo{background:rgba(255,209,102,.08);border-color:rgba(255,209,102,.34)}
+.client-chat-head.apressado,.client-chat-head.problematico{background:rgba(255,92,122,.09);border-color:rgba(255,92,122,.36)}
+.client-chat-head.caloteiro{background:rgba(180,140,255,.10);border-color:rgba(180,140,255,.34)}
+.client-message{font-size:16px;line-height:1.5;padding:16px;border-radius:18px;background:rgba(0,0,0,.24);border-left:5px solid var(--blue);margin:12px 0}
+.client-delay-note{margin-top:10px;padding:10px;border-radius:14px;border:1px solid rgba(255,209,102,.34);background:rgba(255,209,102,.08);font-size:13px;line-height:1.35}
+.client-delay-note.broken{border-color:rgba(255,92,122,.45);background:rgba(255,92,122,.10)}
+.client-delay-note span{color:var(--muted)}
